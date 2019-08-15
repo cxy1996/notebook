@@ -1,0 +1,461 @@
+
+
+linux下如何创建一个.txt类型的文件的方法：
+    - 1、vi 文件名.txt
+    - 2、touch 文件名.txt
+
+================================================================================================================================================
+
+screen -S yourname -> 新建一个叫yourname的session
+screen -ls -> 列出当前所有的session
+screen -r yourname -> 回到yourname这个session
+screen -d yourname -> 远程detach某个session
+screen -d -r yourname -> 结束当前session并回到yourname这个session
+
+screen -X -S yourname quit -> kill screen
+
+================================================================================================================================================
+
+cuda 版本
+cat /usr/local/cuda/version.txt
+cudnn 版本
+cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2
+
+
+================================================================================================================================================
+
+1、conda -V 当前conda的版本。
+
+2、conda常用的命令。
+
+    1）conda list 查看安装了哪些包。
+
+    2）conda env list 或 conda info -e 查看当前存在哪些虚拟环境
+
+    3）conda update conda 检查更新当前conda
+
+3、创建python虚拟环境。
+
+     使用 conda create -n your_env_name python=X.X（2.7、3.6等)命令创建python版本为X.X、名字为your_env_name的虚拟环境。your_env_name文件可以在Anaconda安装目录envs文件下找到。
+
+4、使用激活(或切换不同python版本)的虚拟环境。
+
+    打开命令行输入python --version可以检查当前python的版本。
+
+    Linux:  source activate your_env_name(虚拟环境名称)
+
+    Windows: activate your_env_name(虚拟环境名称)
+
+5、对虚拟环境中安装额外的包。
+
+    使用命令conda install -n your_env_name [package]即可安装package到your_env_name中
+
+6、关闭虚拟环境(即从当前环境退出返回使用PATH环境中的默认python版本)。
+
+   Linux: source deactivate
+
+   Windows: deactivate
+
+7、删除虚拟环境。
+
+   使用命令conda remove -n your_env_name(虚拟环境名称) --all， 即可删除。
+
+8、删除环境中的某个包。
+
+   使用命令conda remove --name your_env_name  package_name 即可。
+
+
+================================================================================================================================================
+
+统计当前文件夹下的文件个数：
+
+ls -l | grep "^-" | wc -l
+
+
+================================================================================================================================================
+
+nvcc: command not found
+
+除了在/.bashrc中配置LD_LIBRARY_PATH路径以外，还需要配置PATH路径，完整配置如下：
+export LD_LIBRARY_PATH=/usr/local/cuda/lib
+export PATH=$PATH:/usr/local/cuda/bin
+
+================================================================================================================================================
+
+ln –s 源文件(path/to/coco) 目标文件(/home/cxy/coco)
+
+================================================================================================================================================
+
+pdb调试命令 完整命令 	简写命令 	描述
+args 	a 	打印当前函数的参数
+break 	b 	设置断点
+clear 	cl 	清除断点
+condition 	无 	设置条件断点
+continue 	c或者cont 	继续运行，知道遇到断点或者脚本结束
+disable 	无 	禁用断点
+enable 	无 	启用断点
+help 	h 	查看pdb帮助
+ignore 	无 	忽略断点
+jump 	j 	跳转到指定行数运行
+list 	l 	列出脚本清单
+next 	n 	执行下条语句，遇到函数不进入其内部
+p 	p 	打印变量值，也可以用print
+quit 	q 	退出 pdb
+return 	r 	一直运行到函数返回
+tbreak 	无 	设置临时断点，断点只中断一次
+step 	s 	执行下一条语句，遇到函数进入其内部
+where 	w 	查看所在的位置
+! 	无 	在pdb中执行语句
+
+================================================================================================================================================
+
+grep -r "**"  即查找当前目录下所有包含"**"的文件
+
+================================================================================================================================================
+
+同时指定三类用户的权限
+
+    chmod [xyz] file
+
+其中x，y，z分别指定User、Group、Other的权限；用三位二进制数表示 ” r , w , x”（注意顺序）三种权限，其中 0 代表没有该权限，1 代表有该权限，如 100 则表示，
+有 ‘r”权限，无 “w x”权限；再将这个三位的二进制数转为十进制，则是 x (或y，z)的值
+
+例如
+
+    sudo chmod 774 /code/readme.txt
+
+User : 7 = 111 表示具有 ” r , w , x” 权限
+Group : 7 = 111 表示具有 ” r , w , x” 权限
+Other : 4 = 100 表示只具有 ” r ” 权限，而没有 “w,x” 权限
+
+    sudo chmod 774 *
+
+” * ” 为通配符，表示对当前所在目录下的所有文件做权限修改操作
+
+    sudo chmod -R 774 /code/
+
+修改这个目录，以及子目录下文件的权限
+
+================================================================================================================================================
+
+环境变量的作用域通常有三个
+
+用于当前终端
+打开一个终端，输入添加环境变量的语句
+export CLASS_PATH=./JAVA_HOME/lib:$JAVA_HOME/jre/lib
+终端所添加的环境变量是临时的，只适用于当前终端，关闭当前终端或在另一个终端中，添加的环境变量无效
+用于当前用户
+
+
+如果只需要添加的环境变量对当前用户有效，可以写入用户主目录下的.bashrc文件
+vim ~/.bashrc
+添加语句
+export CLASS_PATH=./JAVA_HOME/lib:$JAVA_HOME/jre/lib
+注销或者重启可以使修改生效，如果要使添加的环境变量马上生效
+source ~/.bashrc
+
+
+
+用于所有用户
+要使环境变量对所有用户有效，可以修改profile文件
+sudo vim /etc/profile 
+添加语句
+export CLASS_PATH=./JAVA_HOME/lib:$JAVA_HOME/jre/lib
+注销或者重启可以使修改生效，如果要使添加的环境变量马上生效
+source /etc/profile
+
+================================================================================================================================================
+
+Linux环境下，当我们需要使用某个命令时，如果不想加上复杂的路径，可以将路径放在PATH环境变量中：
+
+$ export PATH=~/directory/name:$PATH
+
+或者
+
+$ export PATH=$PATH:~/directory/name
+
+但是当我们需要输入复杂的命令，比如：
+
+$ sudo openvpn --config ~/Documents/client.ovpn --auth-nocache
+
+如果能够只输入openvpn就可以了，是不是就简单很多了呢！
+
+那么这就要用到alias。在命令窗口输入
+
+$ echo "alias aliasname='command'" >> ~/.bash_aliases && source ~/.bash_aliases
+
+其中aliasname用我们需要的命令别名替换，比如openvpn。command则用原始长命令替换：
+
+$ echo "alias openvpn='sudo openvpn --config ~/Documents/client.ovpn --auth-nocache'" >> ~/.bash_aliases && source ~/.bash_aliases
+
+即可。以后，我们只要输入我们的命令别名就可以了！
+
+================================================================================================================================================
+
+设置PYTHONPATH：
+
+     export PYTHONPATH=$PYTHONPATH:/home/ershisui
+
+    然后在　sys.path　中，即已存在该路径
+
+================================================================================================================================================
+
+　　(1) CTRL+Z挂起进程并放入后台
+　　(2) jobs 显示当前暂停的进程
+　　(3) bg %N 使第N个任务在后台运行(%前有空格)
+　　(4) fg %N 使第N个任务在前台运行
+　　默认bg,fg不带%N时表示对最后一个进程操作!
+
+================================================================================================================================================
+
+使用xrandr命令查看屏幕分辨率
+
+================================================================================================================================================
+
+在系统级修改 Python 版本
+
+我们可以使用 update-alternatives 来为整个系统更改 Python 版本。以 root 身份登录，首先罗列出所有可用的 python 替代版本信息：
+	
+# update-alternatives --list python
+update-alternatives: error: no alternatives for python
+
+如果出现以上所示的错误信息，则表示 Python 的替代版本尚未被 update-alternatives 命令识别。想解决这个问题，我们需要更新一下替代列表，将 python2.7 和 python3.4 放入其中。
+	
+# update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+update-alternatives: using /usr/bin/python2.7 to provide /usr/bin/python (python) in auto mode
+# update-alternatives --install /usr/bin/python python /usr/bin/python3.4 2
+update-alternatives: using /usr/bin/python3.4 to provide /usr/bin/python (python) in auto mode
+
+--install 选项使用了多个参数用于创建符号链接。最后一个参数指定了此选项的优先级，如果我们没有手动来设置替代选项，那么具有最高优先级的选项就会被选中。这个例子中，我们为 /usr/bin/python3.4 设置的优先级为2，所以update-alternatives 命令会自动将它设置为默认 Python 版本。
+	
+# python --version
+Python 3.4.2
+
+接下来，我们再次列出可用的 Python 替代版本。
+	
+# update-alternatives --list python
+/usr/bin/python2.7
+/usr/bin/python3.4
+
+现在开始，我们就可以使用下方的命令随时在列出的 Python 替代版本中任意切换了。
+	
+# update-alternatives --config python
+
+================================================================================================================================================
+
+usr的并不是user的意思，而是unix system resrouces，这一点有助于理解/usr这个子文件系统。
+/usr/bin:几乎所有的系统可执行文件都会安装在这里
+/usr/local/bin：则是可以存放一些系统用户自己特定的可执行文件，不用担心会被系统升级之类的行为覆盖，破坏，这个目录不是必须的
+
+================================================================================================================================================
+
+明明ifconfig显示已经获取了网络上的ip,但是浏览器就是打不开网页，百思不得其解。因为这几天用ping用多了，所以进行了以下尝试：
+1)ubuntu系统上打开终端
+  ping www.baidu.com
+  ping:unknown host
+  于是开始怀疑估计是域名解析除了问题
+2）打开自己的另外一台电脑（windows）,ipconfig找到ip地址
+  192.168.1.101
+3）在ubuntu系统上操作
+  ping 192.168.1.101
+  成功ping通
+4）为了再一次进行验证是系统域名解析出了问题，在网上找到了百度首页的ip地址，输入浏览器中，结果百度首页神奇般的出来了！！看来真的是域名解析出问题了。
+  于是开始上网搜索ubuntu系统上的DNS设置。以下是在网上找的参考步骤：
+ 1）sudo gedit /etc/resolv.conf
+   我的打开以后里面是空白，原来真的没有DNS服务器（自己也没搞清楚为什么）
+ 2）上网查了本地的DNS服务器地址，并加入其中
+   nameserver 202.*.*.*
+   然后保存，立即生效了。
+   验证以下：
+   ping www.baidu.com  通啦
+
+================================================================================================================================================
+
+pip show mxnet: 可以查找 pip 安装包的位置等信息
+
+================================================================================================================================================
+
+ps aux|grep process_name 
+查看PID用户等
+
+================================================================================================================================================
+
+jupyter notebook 切换kernel的方法
+source activate ENVNAME
+pip install ipykernel
+python -m ipykernel install --user --name ENVNAME --display-name "Python (whatever you want to call it)"
+
+
+conda install nb_conda
+为jupyter安装所有的环境
+
+================================================================================================================================================
+
+dpkg安装deb缺少依赖包的解决方法（基于Ubuntu）
+
+使用dpkg -i   *.deb 的时候出现依赖没有安装
+
+使用apt-get -f -y install  解决依赖问题后再执行dpkg安装deb包
+
+================================================================================================================================================
+
+使用linux命令df 和du,df 但是df只能查看一级文件夹大小、使用比例、档案系统及其挂入点，但对文件却无能为力。
+du可以查看文件及文件夹的大小。所以基本上是两者配合使用。
+
+df
+    h参数， 表示使用「Human-readable」的输出，即是输出GB、MB方式
+
+    [root@localhost /]# df -h   
+    Filesystem            Size  Used Avail Use% Mounted on   
+    /dev/sda3             262G  224G   25G  91% /   
+    /dev/sda1             190M   12M  169M   7% /boot   
+    tmpfs                 3.9G     0  3.9G   0% /dev/shm  
+
+du
+    max-depth参数表示指定深入目录的层数,很重要，不指定的话，会显示所有层次目录
+
+    [root@localhost /]# du -h --max-depth=1 /usr   
+    1.8G    /usr/share   
+    614M    /usr/lib   
+    8.0K    /usr/etc   
+    2.1M    /usr/kerberos   
+    24K     /usr/X11R6   
+    14G     /usr/local   
+    37M     /usr/libexec   
+    35M     /usr/sbin   
+    224M    /usr/include   
+    199M    /usr/bin   
+    62M     /usr/src   
+    8.0K    /usr/games   
+    727M    /usr/lib64   
+    17G     /usr  
+ 
+================================================================================================================================================
+
+配置DNS服务器
+
+方法一 通过/etc/network/interfaces，在它的最后增加下面的内容：
+dns-nameservers  114.114.114.114              #根据实际情况配置相应的地址
+dns-nameservers  8.8.8.8
+
+保存退出，重启网络服务：
+
+systemctl restart networking.service
+
+查看 /etc/resolv.conf
+
+方法二 通过修改：
+/etc/resolvconf/resolv.conf.d/base（这个文件默认是空的）
+
+在里面插入：
+nameserver 114.114.114.114
+nameserver 8.8.8.8
+
+修改好保存，然后执行
+root@ubuntu:~# resolvconf -u
+
+查看 /etc/resolv.conf
+
+================================================================================================================================================
+
+ubuntu重启网络：
+
+service network restart
+
+/etc/init.d/networking restart
+
+ifdown/ifup etho  (关闭/打开网卡)
+
+ifconfig etho down/up
+
+================================================================================================================================================
+
+pip 默认加速：
+mkdir ~/.pip
+vim ~/.pip/pip.config:
+[global]
+index-url=https://pypi.douban.com/simple/
+
+================================================================================================================================================
+
+查看当前目录下的文件数量（包含子目录中的文件）：
+
+ls -lR|grep "_"|wc -l
+
+ls -l | grep "^-" | wc -l
+
+查看当前目录下的文件夹目录个数（不包含子目录中的目录）：
+
+ls -l|grep "d"|wc -l
+
+查看该目录下以person01开头的文件有多少个（不包含子目录中的文件）：
+
+ls -l person01*|grep "_"|wc -l
+
+================================================================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
